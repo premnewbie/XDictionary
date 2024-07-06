@@ -37,6 +37,7 @@ function App() {
         <input type='text' required onInput={(e) => setInputText(e.target.value)}/>
         <button type='submit'>Search</button>
       </form>
+      <h3>Definition:</h3>
       {showAnswer && <p>{answer}</p>}
     </div>
   );
