@@ -2,8 +2,8 @@ import { useState } from 'react';
 import './App.css';
 
 function App() {
-  const [inputText,setInputText] = useState();
-  const [answer,setAnswer] = useState();
+  const [inputText,setInputText] = useState('');
+  const [answer,setAnswer] = useState('');
   const [showAnswer,setShowAnswer] = useState(false);
 
   const dictionary = [
@@ -18,15 +18,21 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const exists = dictionary.some((obj) => obj.word.toLowerCase() === inputText.toLowerCase());
-    if(exists){
-      const ans = dictionary.find((val) => val.word.toLowerCase()===inputText.toLowerCase());
-      setAnswer(ans.meaning);
-      setShowAnswer(true);
+    if(inputText!==''){
+      const exists = dictionary.some((obj) => obj.word.toLowerCase() === inputText.toLowerCase());
+      if(exists){
+        const ans = dictionary.find((val) => val.word.toLowerCase()===inputText.toLowerCase());
+        setAnswer(ans.meaning);
+        setShowAnswer(true);
+      } else {
+        setAnswer("Word not found in the dictionary.");
+        setShowAnswer(true);
+      }
     } else {
       setAnswer("Word not found in the dictionary.");
       setShowAnswer(true);
     }
+    
   }
 
 
@@ -34,7 +40,7 @@ function App() {
     <div className="App">
       <h1>Dictionary App</h1>
       <form onSubmit={handleSubmit}>
-        <input type='text' required placeholder='Search for a word...' onInput={(e) => setInputText(e.target.value)}/>
+        <input type='text' placeholder='Search for a word...' onInput={(e) => setInputText(e.target.value)}/>
         <button type='submit'>Search</button>
       </form>
       <h3>Definition:</h3>
